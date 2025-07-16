@@ -30,9 +30,7 @@ public class ImageController {
     @PostMapping("/upload")
     public String upload(@RequestParam("file")MultipartFile file) throws IOException {
         String url = s3Service.uploadFile(file);
-        Image image = new Image();
-        image.setOriginalName(file.getOriginalFilename());
-        image.setS3Url(url);
+        Image image = new Image(file.getOriginalFilename(), url);
         imageRepository.save(image);
         return "redirect:/";
     }
